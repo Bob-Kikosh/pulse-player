@@ -2,7 +2,7 @@
 
 A music player with a real waveform, visuals that react to the sound, a play queue, playlists and accounts. The client is built with React and TypeScript; the audio engine, the waveform and all visual effects are written by hand, without player libraries.
 
-<!-- After publishing on GitHub Pages, put the link here: **[Live demo](https://USERNAME.github.io/pulse-player/)** -->
+**[Live demo](https://bob-kikosh.github.io/pulse-player/)**
 
 ![Library with a track playing](docs/library.png)
 
