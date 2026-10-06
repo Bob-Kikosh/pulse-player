@@ -1,0 +1,138 @@
+.button {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--color-muted);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.button:hover,
+.open {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.menu {
+  position: fixed;
+  /* Above every panel of the app */
+  z-index: 60;
+  width: 260px;
+  max-height: min(420px, calc(100vh - 16px));
+  overflow-y: auto;
+  padding: 6px;
+  background: rgb(26 26 34 / 0.96);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(20px);
+  animation: appear 0.16s ease both;
+}
+
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text);
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  color: var(--color-muted);
+}
+
+.itemLabel {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.divider {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--color-border);
+}
+
+.caption {
+  margin: 6px 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.form {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgb(255 255 255 / 0.5);
+}
+
+.create {
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b0b10;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+  }
+}

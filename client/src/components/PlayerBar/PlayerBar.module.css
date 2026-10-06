@@ -1,0 +1,302 @@
+.bar {
+  /* Updated every frame by useAudioReactive */
+  --bass: 0;
+  --mid: 0;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(180px, 250px) auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  max-width: calc(var(--page-width) + 160px);
+  margin: 0 auto;
+  padding: 12px 16px;
+  background: rgb(18 18 24 / 0.72);
+  border: 1px solid color-mix(in srgb, var(--accent) calc(18% + var(--bass) * 55%), rgb(255 255 255 / 0.1));
+  border-radius: 24px;
+  /* The glow around the bar swells with the bass */
+  box-shadow:
+    0 20px 50px -20px rgb(0 0 0 / 0.8),
+    0 0 calc(var(--bass) * 70px) calc(var(--bass) * 4px) color-mix(in srgb, var(--accent) 45%, transparent);
+  backdrop-filter: blur(24px) saturate(1.4);
+  animation: rise 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+/* A light that runs along the top edge while music plays */
+.bar::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 24px;
+  left: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), #fff, var(--accent), transparent);
+  background-repeat: no-repeat;
+  background-size: 50% 100%;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  animation: sweep 3.2s linear infinite;
+  animation-play-state: paused;
+}
+
+.playing::before {
+  opacity: 0.9;
+  animation-play-state: running;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  opacity: 0;
+  /* Brighter in the middle, fading to the sides */
+  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.playing .glow {
+  opacity: 0.22;
+}
+
+.track,
+.controls,
+.timeline,
+.extra {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  min-width: 0;
+}
+
+.open {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.vinyl {
+  width: 54px;
+  transition: transform 0.3s ease;
+}
+
+.open:hover .vinyl {
+  transform: scale(1.08);
+}
+
+.meta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  animation: slide 0.4s ease both;
+}
+
+.title,
+.artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.artist {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.like {
+  display: flex;
+}
+
+.timeline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.time {
+  flex: none;
+  width: 36px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.extra {
+  display: flex;
+  align-items: center;
+}
+
+.control {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: var(--color-muted);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.control:hover {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.control:active {
+  transform: scale(0.88);
+}
+
+.on,
+.on:hover {
+  color: var(--accent);
+}
+
+.volume {
+  display: flex;
+  align-items: center;
+  width: 124px;
+}
+
+.slider {
+  flex: 1;
+  min-width: 0;
+  height: 4px;
+  margin: 0 6px 0 0;
+  background: linear-gradient(to right, var(--accent) var(--value), rgb(255 255 255 / 0.2) var(--value));
+  border-radius: 2px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+  appearance: none;
+  transition: transform 0.15s ease;
+}
+
+.slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+}
+
+.slider:hover::-webkit-slider-thumb {
+  transform: scale(1.35);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes sweep {
+  from {
+    background-position: -100% 0;
+  }
+
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@media (max-width: 1180px) {
+  .volume {
+    display: none;
+  }
+}
+
+/* Phones: the waveform goes on top, the track and the main buttons below it */
+@media (max-width: 760px) {
+  .bar {
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "timeline timeline timeline"
+      "track controls extra";
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .track {
+    grid-area: track;
+  }
+
+  .controls {
+    grid-area: controls;
+  }
+
+  .timeline {
+    grid-area: timeline;
+    gap: 8px;
+    --waveform-height: 34px;
+  }
+
+  .extra {
+    grid-area: extra;
+  }
+
+  .desktop,
+  .like {
+    display: none;
+  }
+
+  .vinyl {
+    width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar::before {
+    animation: none;
+  }
+}

@@ -1,0 +1,174 @@
+.root {
+  /* Updated every frame by useAudioReactive */
+  --bass: 0;
+  --mid: 0;
+
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vh, 24px);
+  align-items: center;
+  padding: 16px 20px clamp(20px, 4vh, 44px);
+  overflow-y: auto;
+  /* The animated background of the app stays visible through the blur */
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--accent) calc(18% + var(--bass) * 22%), transparent), transparent 60%),
+    rgb(8 8 12 / 0.72);
+  backdrop-filter: blur(40px) saturate(1.3);
+  animation: open 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 760px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.08);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, color 0.2s ease;
+}
+
+.iconButton:hover {
+  background: rgb(255 255 255 / 0.18);
+}
+
+.iconButton:active {
+  transform: scale(0.9);
+}
+
+.on {
+  color: var(--accent);
+}
+
+/* The record sits in the middle of the spectrum ring */
+.stage {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 42vh, 500px);
+  /* Pushes the rest of the content to the bottom on tall screens */
+  margin: auto 0;
+  aspect-ratio: 1;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+}
+
+.disc {
+  width: 58%;
+  /* The whole record pumps a little with the bass */
+  scale: calc(1 + var(--bass) * 0.05);
+  animation: drop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+.disc > * {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  max-width: 760px;
+  animation: slide 0.45s ease both;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(26px, 5vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artist {
+  margin: 4px 0 0;
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--color-muted);
+}
+
+.timeline {
+  --waveform-height: clamp(56px, 10vh, 96px);
+
+  flex: none;
+  width: 100%;
+  max-width: 760px;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.time {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+    transform: translateY(8%);
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-40deg);
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (max-width: 600px) {
+  .root {
+    padding: 12px 16px 24px;
+  }
+
+  .stage {
+    width: min(100%, 40vh);
+  }
+}

@@ -1,0 +1,151 @@
+/* Expects --accent and --bass (0..1) from a parent element */
+.controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--color-muted);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.control:hover {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.control:active {
+  transform: scale(0.88);
+}
+
+.on,
+.on:hover {
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.play {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 0 6px;
+  padding: 0;
+  color: #0b0b10;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.play:hover {
+  box-shadow: 0 0 0 5px rgb(255 255 255 / 0.15);
+}
+
+/* While music plays the button beats with the bass and glows in the track color */
+.playing .play {
+  scale: calc(1 + var(--bass, 0) * 0.14);
+  box-shadow:
+    0 0 0 calc(3px + var(--bass, 0) * 7px) color-mix(in srgb, var(--accent) 35%, transparent),
+    0 0 calc(18px + var(--bass, 0) * 40px) var(--accent);
+}
+
+/* A ring that keeps expanding from the play button */
+.playing .play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: ripple 1.6s ease-out infinite;
+}
+
+.large {
+  gap: 12px;
+}
+
+.large .control {
+  width: 52px;
+  height: 52px;
+}
+
+.large .control svg {
+  width: 26px;
+  height: 26px;
+}
+
+.large .play {
+  width: 76px;
+  height: 76px;
+  margin: 0 12px;
+}
+
+@keyframes ripple {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@media (max-width: 760px) {
+  .controls:not(.large) {
+    gap: 0;
+  }
+
+  .secondary {
+    display: none;
+  }
+
+  .controls:not(.large) .play {
+    width: 44px;
+    height: 44px;
+    margin: 0 2px;
+  }
+
+  .large {
+    gap: 4px;
+  }
+
+  .large .play {
+    width: 68px;
+    height: 68px;
+    margin: 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playing .play::after {
+    display: none;
+  }
+}

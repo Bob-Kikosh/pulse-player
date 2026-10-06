@@ -1,0 +1,205 @@
+.panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  /* Above the full-screen player, so the queue can be opened from it */
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  width: min(380px, calc(100vw - 24px));
+  background: rgb(18 18 24 / 0.86);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: -20px 0 60px rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(30px) saturate(1.4);
+  animation: slide-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 14px 6px 22px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px 16px;
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  margin: 18px 12px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.note {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.8;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 6px 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.row:hover {
+  background: rgb(255 255 255 / 0.06);
+}
+
+.current {
+  gap: 12px;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 25%, transparent), transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.current .title {
+  color: var(--accent);
+}
+
+.dragged {
+  opacity: 0.35;
+}
+
+/* Shows where the dragged row will land */
+.over {
+  box-shadow: 0 -2px 0 #fff;
+}
+
+.grip {
+  display: flex;
+  flex: none;
+  color: var(--color-muted);
+  cursor: grab;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title,
+.artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.artist {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.iconButton {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: var(--color-muted);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.iconButton:hover {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.arrows {
+  display: none;
+  flex-direction: column;
+}
+
+.arrow {
+  width: 30px;
+  height: 20px;
+  padding: 0;
+  font-size: 9px;
+  color: var(--color-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.arrow:disabled {
+  opacity: 0.25;
+}
+
+.empty {
+  margin: 8px 12px;
+  color: var(--color-muted);
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+
+@media (hover: none) {
+  .grip {
+    display: none;
+  }
+
+  .arrows {
+    display: flex;
+  }
+}

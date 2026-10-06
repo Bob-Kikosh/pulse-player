@@ -1,0 +1,11 @@
+{
+  "name": "pulse-scripts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-tracks": "node build-tracks.mjs"
+  },
+  "dependencies": {
+    "audio-decode": "^2.2.3"
+  }
+}
